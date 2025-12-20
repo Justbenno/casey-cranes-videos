@@ -1,0 +1,44 @@
+{
+  "id": "CCH-001",
+  "title": "Cranepics",
+  "dateRecorded": "2025-10-25",
+  "status": "cataloged",
+  "description": "Crane equipment footage showcasing Casey Crane Hire operations.",
+  "videoType": "equipment_showcase",
+  "technical": {
+    "format": "MOV",
+    "fileSize": "188 MB"
+  },
+  "storage": {
+    "primary": "/home/ubuntu/upload/Cranepics.MOV"
+  },
+  "platforms": [
+    {
+      "name": "youtube",
+      "published": false
+    },
+    {
+      "name": "instagram",
+      "published": false
+    },
+    {
+      "name": "facebook",
+      "published": false
+    },
+    {
+      "name": "google_ads",
+      "published": false
+    },
+    {
+      "name": "website",
+      "published": false
+    }
+  ],
+  "branding": {
+    "whiteBoomsVerified": false,
+    "yellowHeadboardsVerified": false,
+    "logoVisible": false,
+    "qualityCheckCompleted": false
+  },
+  "notes": "This is the first video cataloged in the system. Awaiting review and upload to appropriate platforms."
+}

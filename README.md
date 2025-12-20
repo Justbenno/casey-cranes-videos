@@ -18,9 +18,14 @@ This repository helps organize, track, and manage all video content for Casey Cr
 casey-cranes-videos/
 ├── README.md                 # This file
 ├── VIDEO_CATALOG.md          # Master catalog of all videos
+├── metadata/                 # Video metadata files (JSON format)
+├── schemas/                  # JSON schemas for data validation
+├── scripts/                  # Automation scripts for catalog management
 ├── templates/                # Templates for video documentation
-├── metadata/                 # Individual video metadata files
-└── assets/                   # Supporting materials (thumbnails, scripts, etc.)
+├── docs/                     # Marketing guides and strategies
+├── archive/                  # Historical/old versions of documents
+├── content/                  # Marketing content
+└── images/                   # Image assets
 ```
 
 ## Equipment Featured
@@ -60,9 +65,36 @@ Membreys Cranes and Transport, P&D Rigging, MCG Cranes, JYC, Metcalf, Gravity Ri
 
 ## Usage
 
-1. **Adding a New Video**: Create a new entry in `VIDEO_CATALOG.md` using the template
-2. **Updating Video Information**: Edit the corresponding entry in the catalog
-3. **Weekly Reviews**: Review and update video performance metrics weekly
+### Managing Videos
+
+#### Adding a New Video
+1. Create a new JSON file in `metadata/` using the next sequential ID (e.g., `CCH-002.json`)
+2. Follow the schema defined in `schemas/video-metadata-schema.json`
+3. Add an entry to `VIDEO_CATALOG.md`
+4. Or use the template in `templates/video-entry-template.md` for markdown format
+
+#### Updating Video Information
+- Edit the corresponding JSON file in `metadata/`
+- Update the entry in the catalog if needed
+
+#### Automation Scripts
+Use the Python script for easier management:
+```bash
+# List all videos
+python scripts/catalog_manager.py list
+
+# Show statistics
+python scripts/catalog_manager.py stats
+
+# Generate full report
+python scripts/catalog_manager.py report
+
+# Check completeness
+python scripts/catalog_manager.py check
+```
+
+### Weekly Reviews
+Review and update video performance metrics weekly using the automation scripts.
 
 ## Maintained By
 

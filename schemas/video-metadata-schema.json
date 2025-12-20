@@ -1,0 +1,173 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Casey Crane Hire Video Metadata",
+  "description": "Schema for video metadata in the Casey Crane Hire video catalog",
+  "type": "object",
+  "required": ["id", "title", "dateRecorded", "status"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^CCH-\\d{3,}$",
+      "description": "Unique video identifier (e.g., CCH-001)"
+    },
+    "title": {
+      "type": "string",
+      "description": "Video title"
+    },
+    "dateRecorded": {
+      "type": "string",
+      "format": "date",
+      "description": "Date the video was recorded (YYYY-MM-DD)"
+    },
+    "duration": {
+      "type": "string",
+      "pattern": "^\\d{1,2}:\\d{2}(:\\d{2})?$",
+      "description": "Video duration (MM:SS or HH:MM:SS)"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["published", "cataloged", "archived", "in_production"],
+      "description": "Current status of the video"
+    },
+    "description": {
+      "type": "string",
+      "description": "Detailed description of the video content"
+    },
+    "equipment": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["GMK5170", "GMK5150", "GMK4080", "GMK3060", "GMK5250"]
+      },
+      "description": "Casey Crane Hire equipment featured in the video"
+    },
+    "videoType": {
+      "type": "string",
+      "enum": [
+        "marketing",
+        "equipment_showcase",
+        "project_documentation",
+        "training",
+        "safety",
+        "social_media"
+      ],
+      "description": "Category of video content"
+    },
+    "technical": {
+      "type": "object",
+      "properties": {
+        "format": {
+          "type": "string",
+          "description": "File format (e.g., MOV, MP4)"
+        },
+        "fileSize": {
+          "type": "string",
+          "description": "File size (e.g., 188 MB)"
+        },
+        "resolution": {
+          "type": "string",
+          "description": "Video resolution (e.g., 1920x1080)"
+        },
+        "fps": {
+          "type": "number",
+          "description": "Frames per second"
+        }
+      }
+    },
+    "storage": {
+      "type": "object",
+      "properties": {
+        "primary": {
+          "type": "string",
+          "description": "Primary storage location"
+        },
+        "backup": {
+          "type": "string",
+          "description": "Backup storage location"
+        }
+      }
+    },
+    "platforms": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "published"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "enum": ["youtube", "instagram", "facebook", "tiktok", "google_ads", "website"]
+          },
+          "published": {
+            "type": "boolean"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "publishDate": {
+            "type": "string",
+            "format": "date"
+          }
+        }
+      }
+    },
+    "performance": {
+      "type": "object",
+      "properties": {
+        "views": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "likes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "shares": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "comments": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "engagement_rate": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "lastUpdated": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "branding": {
+      "type": "object",
+      "properties": {
+        "whiteBoomsVerified": {
+          "type": "boolean"
+        },
+        "yellowHeadboardsVerified": {
+          "type": "boolean"
+        },
+        "logoVisible": {
+          "type": "boolean"
+        },
+        "qualityCheckCompleted": {
+          "type": "boolean"
+        }
+      }
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Tags for categorization and searchability"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Additional notes about the video"
+    }
+  }
+}
