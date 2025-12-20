@@ -8,7 +8,7 @@ Automation scripts for managing the Casey Crane Hire video catalog efficiently.
 
 A comprehensive Python tool for managing the video catalog.
 
-**Requirements**: Python 3.6+
+**Requirements**: Python 3.8+
 
 **Usage**:
 ```bash

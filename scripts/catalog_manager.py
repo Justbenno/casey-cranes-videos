@@ -14,15 +14,22 @@ import os
 from pathlib import Path
 from typing import Dict, List, Any
 from datetime import datetime
+import argparse
+
+# Configuration constants
+METADATA_DIR = "metadata"
+SCHEMA_FILE = "schemas/video-metadata-schema.json"
+VIDEO_ID_PREFIX = "CCH-"
+VIDEO_ID_PATTERN = r"^CCH-\d{3,}$"
 
 
 class VideoCatalog:
     """Video catalog management class"""
     
-    def __init__(self, base_path: str = "."):
+    def __init__(self, base_path: str = ".", metadata_dir: str = None, schema_file: str = None):
         self.base_path = Path(base_path)
-        self.metadata_dir = self.base_path / "metadata"
-        self.schema_path = self.base_path / "schemas" / "video-metadata-schema.json"
+        self.metadata_dir = self.base_path / (metadata_dir or METADATA_DIR)
+        self.schema_path = self.base_path / (schema_file or SCHEMA_FILE)
         
     def load_schema(self) -> Dict[str, Any]:
         """Load the JSON schema"""
@@ -40,7 +47,8 @@ class VideoCatalog:
         if not self.metadata_dir.exists():
             return videos
         
-        for json_file in sorted(self.metadata_dir.glob("CCH-*.json")):
+        pattern = f"{VIDEO_ID_PREFIX}*.json"
+        for json_file in sorted(self.metadata_dir.glob(pattern)):
             try:
                 with open(json_file, 'r') as f:
                     video = json.load(f)
@@ -61,8 +69,10 @@ class VideoCatalog:
                 issues.append(f"Missing required field: {field}")
         
         # Check ID format
-        if "id" in video and not video["id"].startswith("CCH-"):
-            issues.append(f"Invalid ID format: {video['id']} (should be CCH-XXX)")
+        if "id" in video:
+            import re
+            if not re.match(VIDEO_ID_PATTERN, video["id"]):
+                issues.append(f"Invalid ID format: {video['id']} (should match {VIDEO_ID_PATTERN})")
         
         # Check status value
         valid_statuses = ["published", "cataloged", "archived", "in_production"]
@@ -98,8 +108,7 @@ class VideoCatalog:
             for platform in video.get("platforms", []):
                 name = platform.get("name", "unknown")
                 if platform.get("published", False):
-                    stats["published_platforms"][name] = \
-                        stats["published_platforms"].get(name, 0) + 1
+                    stats["published_platforms"][name] = stats["published_platforms"].get(name, 0) + 1
             
             # Branding check
             branding = video.get("branding", {})
@@ -209,40 +218,50 @@ class VideoCatalog:
 
 def main():
     """Main entry point"""
-    import sys
+    parser = argparse.ArgumentParser(
+        description="Casey Crane Hire Video Catalog Management Tool",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+  %(prog)s list       List all videos in the catalog
+  %(prog)s stats      Show statistics about the catalog
+  %(prog)s report     Generate a full markdown report
+  %(prog)s check      Check all videos for completeness
+        """
+    )
     
-    catalog = VideoCatalog()
+    parser.add_argument(
+        "command",
+        choices=["list", "stats", "report", "check"],
+        help="Command to execute"
+    )
     
-    if len(sys.argv) < 2:
-        print("Usage:")
-        print("  python catalog_manager.py list       - List all videos")
-        print("  python catalog_manager.py stats      - Show statistics")
-        print("  python catalog_manager.py report     - Generate full report")
-        print("  python catalog_manager.py check      - Check completeness")
-        sys.exit(1)
+    parser.add_argument(
+        "--base-path",
+        default=".",
+        help="Base path to the repository (default: current directory)"
+    )
     
-    command = sys.argv[1].lower()
+    args = parser.parse_args()
     
-    if command == "list":
+    catalog = VideoCatalog(base_path=args.base_path)
+    
+    if args.command == "list":
         videos = catalog.list_videos()
         print(f"\nFound {len(videos)} video(s):\n")
         for video in videos:
             print(f"{video.get('id', 'Unknown')} - {video.get('title', 'Untitled')} [{video.get('status', 'unknown')}]")
     
-    elif command == "stats":
+    elif args.command == "stats":
         stats = catalog.get_statistics()
         print(json.dumps(stats, indent=2))
     
-    elif command == "report":
+    elif args.command == "report":
         report = catalog.generate_report()
         print(report)
     
-    elif command == "check":
+    elif args.command == "check":
         catalog.check_completeness()
-    
-    else:
-        print(f"Unknown command: {command}")
-        sys.exit(1)
 
 
 if __name__ == "__main__":
