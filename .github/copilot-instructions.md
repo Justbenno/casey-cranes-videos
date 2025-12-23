@@ -4,14 +4,14 @@
 - **Video IDs**: Use sequential `CCH-###` IDs; file names in `metadata/` follow `CCH-###-Title.md`. Keep the ID consistent across catalog and metadata.
 - **Catalog updates**: When adding videos, copy the template structure, add a new section under `## Video Entries`, and update the “Quick Stats” totals and “Last Updated” date. Use the existing bold-label + checkbox pattern and the status legend (🟢/🟡/🔴/🔵).
 - **Status legend**: Preserve the status meanings in `VIDEO_CATALOG.md` (Published/Cataloged/Archived/In Production) and align entry statuses to these icons.
-- **Metadata files**: Maintain sections in the order used in `templates/video-entry-template.md` (Video Information → Content Details → Technical Details → Storage & Distribution → Performance → Notes/Branding Compliance). Preserve checkboxes and bold labels for readability.
+- **Metadata files**: Maintain sections in the order used in `templates/video-entry-template.md` (Video Information → Content Details → Technical Details → Storage & Distribution → Performance → Notes → Branding Compliance). Preserve checkboxes and bold labels for readability.
 - **Dates & formatting**: Use `YYYY-MM-DD` where the template calls for it; keep bold labels (`**Field**:`) and checklist syntax (`- [ ]`) without introducing new formats.
-- **Branding requirements**: Grove all-terrain fleet (GMK5250/5170/5150/4080/3060); visuals must show white booms/cabs and yellow headboards with the Casey Crane Hire logo. Keep the safety-first, professional, Australian tone reflected across docs.
+- **Branding requirements**: Grove all-terrain fleet (GMK5170/5150/4080/3060/5250 as listed in README/templates); visuals must show white booms/cabs and yellow headboards with the Casey Crane Hire logo. Keep the safety-first, professional, Australian tone reflected across docs.
 - **Storage/publishing fields**: Record primary storage path/URL and platform links; keep platform checkboxes in both catalog and metadata files aligned with publication status.
 - **Asset policy**: No media binaries are stored here—only references/paths. Do not add video files; document links/locations instead.
 - **Content voice references**: Reuse phrasing and CTAs from `content/marketing-copy.md` (hashtags, tone, positioning) and related messaging guides to stay on-brand.
 - **Brand voice**: Professional, safety-first, confident, and approachable; avoid aggressive sales language or negative competitor talk.
-- **Equipment references**: When identifying cranes, use the Grove model names exactly as listed in `README.md` and templates.
+- **Equipment references**: When identifying cranes, use the Grove model names and ordering from `README.md`/templates: GMK5170, GMK5150, GMK4080, GMK3060, GMK5250.
 - **Checklist fidelity**: Keep checkbox order and wording identical to the template for consistency between catalog and metadata files.
 - **Cross-file alignment**: Ensure the same video data (title, dates, status, platforms) stays consistent between `VIDEO_CATALOG.md` and its `metadata/` entry.
 - **Performance fields**: If a video is unpublished, leave metrics as placeholders; only add numbers once platforms are live.
