@@ -6,12 +6,12 @@
 - **Status legend**: Preserve the status meanings in `VIDEO_CATALOG.md` (Published/Cataloged/Archived/In Production) and align entry statuses to these icons.
 - **Metadata files**: Maintain sections in the order used in `templates/video-entry-template.md` (Video Information → Content Details → Technical Details → Storage & Distribution → Performance → Notes → Branding Compliance). Preserve checkboxes and bold labels for readability.
 - **Dates & formatting**: Use `YYYY-MM-DD` where the template calls for it; keep bold labels (`**Field**:`) and checklist syntax (`- [ ]`) without introducing new formats.
-- **Branding requirements**: Grove all-terrain fleet (use the template order: GMK5170, GMK5150, GMK4080, GMK3060, GMK5250); visuals must show white booms/cabs and yellow headboards with the Casey Crane Hire logo. Keep the safety-first, professional, Australian tone reflected across docs.
+- **Branding requirements**: Grove all-terrain fleet (order consistently used in README and template checklists: GMK5170, GMK5150, GMK4080, GMK3060, GMK5250); visuals must show white booms/cabs and yellow headboards with the Casey Crane Hire logo. Keep the safety-first, professional, Australian tone reflected across docs.
 - **Storage/publishing fields**: Record primary storage path/URL and platform links; keep platform checkboxes in both catalog and metadata files aligned with publication status.
 - **Asset policy**: No media binaries are stored here—only references/paths. Do not add video files; document links/locations instead.
 - **Content voice references**: Reuse phrasing and CTAs from `content/marketing-copy.md` (hashtags, tone, positioning) and related messaging guides to stay on-brand.
 - **Brand voice**: Professional, safety-first, confident, and approachable; avoid aggressive sales language or negative competitor talk.
-- **Equipment references**: Match the template order for model mentions: GMK5170, GMK5150, GMK4080, GMK3060, GMK5250.
+- **Equipment references**: Use the shared order from README/template checkboxes: GMK5170, GMK5150, GMK4080, GMK3060, GMK5250.
 - **Checklist fidelity**: Keep checkbox order and wording identical to the template for consistency between catalog and metadata files.
 - **Cross-file alignment**: Ensure the same video data (title, dates, status, platforms) stays consistent between `VIDEO_CATALOG.md` and its `metadata/` entry.
 - **Performance fields**: If a video is unpublished, leave metrics as placeholders; only add numbers once platforms are live.
