@@ -8,7 +8,7 @@ Dates:
 - Correct by (30 days): 2026-01-31
 
 Evidence storage (recommended):
-- Directory: `docs/compliance/evidence/2026-01-01/`
+- Directory: `docs/compliance/evidence/2026-01-01/` (update folder to match audit date for future runs)
 - Naming: `{asset}-{page-or-context}-{view}.{png|pdf}`
   - Example: `website-footer-homepage.png`, `about-us-fullpage-top.png`, `quote-template-export.pdf`
 
