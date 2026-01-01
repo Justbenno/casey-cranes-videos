@@ -1,0 +1,15 @@
+# Default: everything in the repo requires review by @Justbenno
+*                                   @Justbenno
+
+# High-signal governance & scaffolding
+.github/**                          @Justbenno
+.github/workflows/**                @Justbenno
+docs/**                             @Justbenno
+
+# Policy & trust docs
+SECURITY.md                         @Justbenno
+CODE_OF_CONDUCT.md                  @Justbenno
+LICENSE                             @Justbenno
+
+# Operational-adjacent scripts (guarded)
+scripts/**                          @Justbenno
