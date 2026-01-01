@@ -112,10 +112,10 @@ Available commands:
   "id": "CCH-001",
   "title": "Video Title",
   "description": "Description",
-  "status": "published|draft|archived",
+  "status": "published|cataloged|archived|in_production",
   "platforms": [
     {
-      "name": "youtube|instagram|facebook",
+      "name": "youtube|instagram|facebook|tiktok|google_ads|website",
       "published": true|false,
       "url": "https://...",
       "publishDate": "2025-12-20"
