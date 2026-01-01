@@ -107,30 +107,44 @@ Available commands:
 ## Common Patterns
 
 ### JSON Metadata Structure:
+The schema requires these fields: `id`, `title`, `dateRecorded`, `status`.
+
+Example:
 ```json
 {
   "id": "CCH-001",
-  "title": "Video Title",
-  "description": "Description",
-  "status": "published|cataloged|archived|in_production",
+  "title": "GMK5170 Lifting Operation at Sydney Port",
+  "description": "170-tonne crane performing heavy lift at port facility",
+  "dateRecorded": "2025-10-15",
+  "status": "published",
   "platforms": [
     {
-      "name": "youtube|instagram|facebook|tiktok|google_ads|website",
-      "published": true|false,
-      "url": "https://...",
-      "publishDate": "2025-12-20"
+      "name": "youtube",
+      "published": true,
+      "url": "https://youtube.com/watch?v=example",
+      "publishDate": "2025-10-20"
+    },
+    {
+      "name": "instagram",
+      "published": true,
+      "url": "https://instagram.com/p/example",
+      "publishDate": "2025-10-21"
     }
   ],
   "performance": {
-    "views": 0,
-    "likes": 0,
-    "shares": 0,
-    "comments": 0,
-    "engagement_rate": 0.0,
+    "views": 1250,
+    "likes": 87,
+    "shares": 12,
+    "comments": 8,
+    "engagement_rate": 8.5,
     "lastUpdated": "2025-12-20T10:00:00Z"
   }
 }
 ```
+
+**Valid status values**: `published`, `cataloged`, `archived`, `in_production`
+
+**Valid platform names**: `youtube`, `instagram`, `facebook`, `tiktok`, `google_ads`, `website`
 
 ## Testing and Validation
 - Always run `python scripts/catalog_manager.py check` before committing
