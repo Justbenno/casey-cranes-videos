@@ -38,10 +38,11 @@ This repository is a **catalog and documentation system** for Casey Crane Hire's
 
 #### JSON Metadata
 - Follow `schemas/video-metadata-schema.json` strictly
-- Required fields: `id`, `title`, `description`, `duration`, `status`, `platforms`, `tags`, `crane_models`, `created`, `lastModified`
-- Date format: ISO 8601 (e.g., `2025-12-20T10:00:00Z`)
-- Status values: `planned`, `in_production`, `ready`, `published`, `archived`
-- Always update `lastModified` when editing metadata
+- Required fields: `id`, `title`, `dateRecorded`, `status`
+- Optional but commonly used fields: `description`, `duration`, `equipment`, `videoType`, `platforms`, `tags`, `technical`, `storage`, `performance`, `branding`, `notes`
+- Date format: `YYYY-MM-DD` for dates (e.g., `2025-12-20`), ISO 8601 for date-time (e.g., `2025-12-20T10:00:00Z`)
+- Status values: `published`, `cataloged`, `archived`, `in_production`
+- Duration format: `MM:SS` or `HH:MM:SS`
 
 #### Markdown Documentation
 - Use clear headings and consistent structure
