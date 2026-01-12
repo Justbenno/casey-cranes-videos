@@ -39,11 +39,15 @@ casey-cranes-videos/
 
 - Use Python 3.x syntax
 - Follow PEP 8 style guidelines
-- Use type hints for function parameters and return values (e.g., `def function(param: str) -> Dict[str, Any]:`)
+- Use type hints for function parameters and return values
+  - Example: `def function(param: str) -> dict[str, Any]:` (Python 3.9+)
+  - Or with imports: `from typing import Dict` then `def function(param: str) -> Dict[str, Any]:`
 - Use descriptive variable names in snake_case
 - Include docstrings for classes and functions
 - Use `pathlib.Path` for file path operations instead of `os.path`
-- Handle errors explicitly with try/except blocks (avoid bare try/except in import blocks)
+- Handle errors explicitly with try/except blocks
+  - Avoid: `try: import module except: pass` (silently ignores errors)
+  - Prefer: `try: import module except ImportError as e: logger.warning(f"Optional module not available: {e}")`
 
 ### JSON
 
@@ -134,7 +138,10 @@ When working with the catalog, always use the automation script rather than manu
 ## File Naming Conventions
 
 - Video metadata JSON files: `CCH-###.json` where ### is 3+ digits (e.g., `CCH-001.json`, `CCH-002.json`, `CCH-100.json`)
-- Markdown documentation: Use UPPER_CASE with hyphens for existing docs (e.g., `VIDEO-MARKETING-STRATEGY.md`) or kebab-case for new documents
+- Markdown documentation: The repository uses mixed naming conventions
+  - Major/strategic docs: UPPER_CASE with hyphens or underscores (e.g., `VIDEO-MARKETING-STRATEGY.md`, `MARKETING_PACKAGE_SUMMARY.md`)
+  - General docs: kebab-case (e.g., `competitor-analysis.md`, `blog-post-benefits.md`)
+  - When creating new docs, match the pattern of similar existing documents
 - Python scripts: Use snake_case (e.g., `catalog_manager.py`)
 - Images: Descriptive names with hyphens (e.g., `gmk5170-white-boom.jpg`)
 
