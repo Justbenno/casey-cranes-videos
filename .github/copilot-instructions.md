@@ -50,7 +50,7 @@ casey-cranes-videos/
 - Follow the JSON Schema defined in `schemas/video-metadata-schema.json`
 - Use 2-space indentation for JSON files
 - Ensure all required fields are present: `id`, `title`, `dateRecorded`, `status`
-- Video IDs must follow pattern: `CCH-###` (e.g., `CCH-001`, `CCH-002`)
+- Video IDs must follow pattern: `CCH-` followed by 3 or more digits (e.g., `CCH-001`, `CCH-002`, `CCH-100`)
 - Date formats must be ISO 8601: `YYYY-MM-DD`
 - Duration format: `MM:SS` or `HH:MM:SS`
 
@@ -133,8 +133,8 @@ When working with the catalog, always use the automation script rather than manu
 
 ## File Naming Conventions
 
-- Video metadata JSON files: `CCH-###.json` (sequential numbering)
-- Markdown documentation: Use kebab-case (e.g., `video-marketing-strategy.md`)
+- Video metadata JSON files: `CCH-###.json` where ### is 3+ digits (e.g., `CCH-001.json`, `CCH-002.json`, `CCH-100.json`)
+- Markdown documentation: Use UPPER_CASE with hyphens for existing docs (e.g., `VIDEO-MARKETING-STRATEGY.md`) or kebab-case for new documents
 - Python scripts: Use snake_case (e.g., `catalog_manager.py`)
 - Images: Descriptive names with hyphens (e.g., `gmk5170-white-boom.jpg`)
 
