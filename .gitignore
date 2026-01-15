@@ -46,3 +46,12 @@ htmlcov/
 *.swo
 *~
 
+# OpenAI script outputs
+scripts/responses/
+responses/
+
+# API keys and secrets
+.env
+*.key
+*_key.txt
+
