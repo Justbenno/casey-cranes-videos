@@ -60,3 +60,15 @@ Example Ruleset payload (matches GitHub REST Rulesets schema):
   ]
 }
 ```
+
+Notes:
+- Replace status check contexts with your real workflow check names.
+- If you later need bypass rules (owner/admin only), add `bypass_actors` per GitHub schema.
+
+Definition of Done:
+- Ruleset applied to `main`
+- CODEOWNERS enforced
+- Required checks configured and passing
+
+References:
+- [REST API endpoints for rules - GitHub Docs](https://docs.github.com/rest/repos/rules)

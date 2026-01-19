@@ -31,9 +31,10 @@ Output format:
 - Required Actions: Concrete, minimal steps for author
 
 Strictness:
-- If any checklist item is missing or ambiguous, respond with “Changes Requested” and list the missing items.
+- If any checklist item is missing or ambiguous, respond with "Changes Requested" and list the missing items.
 - Treat any operational change within disallowed areas as blocking.
 
 Notes:
 - Prefer smallest change surface and explicit rationale.
+- Escalate to human owners for any exceptions.
 - Escalate to CODEOWNERS (@Justbenno) for any exceptions or scope deviations.
