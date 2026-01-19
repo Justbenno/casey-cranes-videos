@@ -37,3 +37,4 @@ Strictness:
 Notes:
 - Prefer smallest change surface and explicit rationale.
 - Escalate to human owners for any exceptions.
+- Escalate to CODEOWNERS (@Justbenno) for any exceptions or scope deviations.

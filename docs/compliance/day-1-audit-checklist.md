@@ -9,6 +9,7 @@ Dates:
 
 Evidence storage (recommended):
 - Directory: `docs/compliance/evidence/2026-01-01/`
+- Directory: `docs/compliance/evidence/2026-01-01/` (update folder to match audit date for future runs)
 - Naming: `{asset}-{page-or-context}-{view}.{png|pdf}`
   - Example: `website-footer-homepage.png`, `about-us-fullpage-top.png`, `quote-template-export.pdf`
 
@@ -16,6 +17,7 @@ Evidence storage (recommended):
 Pass if: Logo remains dominant; doodle is small + secondary and only in approved footer position.  
 Evidence: Screenshot footer on homepage + one service page.  
 If fail: Remove doodle from footer or reduce until it's clearly secondary.
+If fail: Remove doodle from footer or reduce until it’s clearly secondary.
 
 Checklist:
 - [ ] Homepage footer screenshot captured
