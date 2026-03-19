@@ -4,6 +4,34 @@ Automation scripts for managing the Casey Crane Hire video catalog efficiently.
 
 ## Available Scripts
 
+### stream_with_log.py
+
+An interactive script for chatting with OpenAI's GPT models with automatic logging.
+
+**Requirements**: Python 3.8+, `openai` package
+
+**Setup**:
+```bash
+# Install the OpenAI package
+pip install openai
+
+# Edit the script and replace "your-api-key-here" with your actual OpenAI API key
+# Or set the OPENAI_API_KEY environment variable
+```
+
+**Usage**:
+```bash
+python stream_with_log.py
+```
+
+**Features**:
+- Prompts you to enter a question for the AI model
+- Streams the response in real-time to your terminal
+- Automatically saves the full conversation to a timestamped file in the `responses/` directory
+- Each response is saved as `response_YYYY-MM-DD_HH-MM-SS.txt`
+
+**Note**: The `responses/` directory is automatically created and excluded from git commits (see `.gitignore`).
+
 ### catalog_manager.py
 
 A comprehensive Python tool for managing the video catalog.
