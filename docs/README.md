@@ -7,6 +7,7 @@ This directory contains current marketing strategies, guides, and content plans 
 ### Core Guides
 - **messaging-guide.md** - Official messaging guide for all marketing communications
 - **content-calendar-november-2025.md** - November 2025 content calendar
+- **caseyops-core-setup.md** - Pick-your-path setup steps for running Swift build/test
 
 ### Marketing Strategy
 - **VIDEO-MARKETING-STRATEGY.md** - Overall video marketing strategy
