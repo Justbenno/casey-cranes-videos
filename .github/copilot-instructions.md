@@ -274,13 +274,25 @@ When documenting videos, always use exact crane model names and ensure branding 
 
 ### 6. Automation Scripts
 
+**Environment**: Python 3 (any 3.x version; tested with Python 3.12). No external dependencies — uses only the Python standard library. No `pip install` or virtual environment setup is needed.
+
+**Important**: All scripts must be run from the **repository root** directory.
+
 The primary tool is `scripts/catalog_manager.py`:
 ```bash
 python scripts/catalog_manager.py list    # List all videos
 python scripts/catalog_manager.py stats   # Show statistics
 python scripts/catalog_manager.py report  # Generate full report
-python scripts/catalog_manager.py check   # Validate metadata
+python scripts/catalog_manager.py check   # Validate metadata (use this to verify changes)
 ```
+
+**Validation workflow** — always run after making changes to metadata:
+```bash
+python scripts/catalog_manager.py check
+```
+A clean run shows `Total Issues: 0`. Any issues are printed per-video.
+
+**No CI/CD pipelines exist** in this repository (no `.github/workflows/`). Validation is entirely manual via the above command.
 
 **When modifying scripts**:
 - Maintain Python 3 compatibility
@@ -365,6 +377,23 @@ python scripts/catalog_manager.py check   # Validate metadata
 - Don't include sensitive customer information in metadata
 - Video URLs should be public-facing links only
 - Respect copyright and licensing for all content
+
+## Key Files Reference
+
+| Path | Purpose |
+|------|---------|
+| `README.md` | Project overview and usage |
+| `VIDEO_CATALOG.md` | Master catalog of all videos |
+| `schemas/video-metadata-schema.json` | JSON schema for metadata validation |
+| `scripts/catalog_manager.py` | Primary automation tool |
+| `scripts/README.md` | Script usage documentation |
+| `metadata/CCH-001.json` | Example video metadata file |
+| `metadata/CCH-001-Cranepics.md` | Example detailed markdown entry |
+| `templates/` | Templates for new content |
+| `docs/` | Current marketing guides |
+| `archive/` | Historical versions (read-only) |
+| `.github/copilot-instructions.md` | This file |
+| `.github/CODEOWNERS` | Code ownership rules |
 
 ## Contact
 
