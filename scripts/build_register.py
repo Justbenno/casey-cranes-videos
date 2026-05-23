@@ -34,6 +34,8 @@ KEYWORD_MAP: dict[str, tuple[str, ...]] = {
     "ATO Correspondence": ("ato", "notice of assessment", "mygov"),
     "Objection Evidence": ("objection", "dispute", "review"),
 }
+
+
 @dataclass(frozen=True)
 class ClassifiedRow:
     """Classified evidence register row."""
