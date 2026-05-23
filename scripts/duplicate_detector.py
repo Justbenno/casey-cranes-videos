@@ -9,28 +9,31 @@ from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
 
+ManifestRow = dict[str, str]
+DuplicateGroup = tuple[str, list[ManifestRow]]
+
 
 def utc_now() -> str:
     """Return current UTC timestamp in ISO 8601 format."""
     return datetime.now(timezone.utc).isoformat()
 
 
-def read_manifest(path: Path) -> list[dict[str, str]]:
+def read_manifest(path: Path) -> list[ManifestRow]:
     """Read input manifest CSV rows."""
     with path.open("r", newline="", encoding="utf-8") as file_obj:
         return list(csv.DictReader(file_obj))
 
 
-def detect_duplicates(rows: list[dict[str, str]]) -> list[tuple[str, list[dict[str, str]]]]:
+def detect_duplicates(rows: list[ManifestRow]) -> list[DuplicateGroup]:
     """Return duplicate groups keyed by sha256 hash."""
-    grouped: dict[str, list[dict[str, str]]] = defaultdict(list)
+    grouped: dict[str, list[ManifestRow]] = defaultdict(list)
     for row in rows:
         file_hash = row.get("sha256", "").strip()
         if not file_hash:
             continue
         grouped[file_hash].append(row)
 
-    duplicates: list[tuple[str, list[dict[str, str]]]] = []
+    duplicates: list[DuplicateGroup] = []
     for file_hash, hash_rows in grouped.items():
         if len(hash_rows) > 1:
             duplicates.append((file_hash, hash_rows))
@@ -38,7 +41,7 @@ def detect_duplicates(rows: list[dict[str, str]]) -> list[tuple[str, list[dict[s
 
 
 def write_duplicates(
-    duplicate_groups: list[tuple[str, list[dict[str, str]]]],
+    duplicate_groups: list[DuplicateGroup],
     output_path: Path,
 ) -> int:
     """Write duplicate report and return duplicate record count."""

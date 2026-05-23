@@ -11,6 +11,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Iterable
 
+DEFAULT_HASH_CHUNK_SIZE = 1024 * 1024
+
 
 @dataclass(frozen=True)
 class ScanRow:
@@ -29,7 +31,7 @@ def utc_now() -> str:
     return datetime.now(timezone.utc).isoformat()
 
 
-def sha256_file(path: Path, chunk_size: int = 1024 * 1024) -> str:
+def sha256_file(path: Path, chunk_size: int = DEFAULT_HASH_CHUNK_SIZE) -> str:
     """Return sha256 hash for a file path."""
     digest = hashlib.sha256()
     with path.open("rb") as file_obj:

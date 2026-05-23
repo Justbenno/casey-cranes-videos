@@ -9,6 +9,9 @@ from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
 
+HIGH_CONFIDENCE_THRESHOLD = 2
+MEDIUM_CONFIDENCE_THRESHOLD = 1
+
 
 KEYWORD_MAP: dict[str, tuple[str, ...]] = {
     "PAYG": ("payg", "income statement", "payslip", "salary"),
@@ -61,9 +64,9 @@ def classify_text(text: str) -> tuple[str, str]:
     lowered = text.lower()
     for category, keywords in KEYWORD_MAP.items():
         matches = sum(1 for keyword in keywords if keyword in lowered)
-        if matches >= 2:
+        if matches >= HIGH_CONFIDENCE_THRESHOLD:
             return category, "high"
-        if matches == 1:
+        if matches == MEDIUM_CONFIDENCE_THRESHOLD:
             return category, "medium"
     return "Unknown / Review Required", "low"
 
