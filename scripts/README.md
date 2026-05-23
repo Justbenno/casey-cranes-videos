@@ -68,6 +68,52 @@ Additional scripts can be added here for:
 - Content calendar management
 - Social media post scheduling
 
+## Tax Operations Scripts (Deterministic First Phase)
+
+### scan_drive.py
+
+Read-only recursive scanner that creates a file manifest CSV with metadata and SHA256 hashes.
+
+```bash
+python scripts/scan_drive.py --source "/absolute/path/to/source" --operator "Benjamin Ashdown"
+```
+
+Default outputs:
+- `logs/source_scan_manifest.csv`
+- `logs/operations_log.csv`
+
+### scan_downloads.ps1
+
+Windows PowerShell equivalent scanner for Downloads intake.
+
+```powershell
+pwsh -File scripts/scan_downloads.ps1 -SourcePath "$env:USERPROFILE\\Downloads" -Operator "Benjamin Ashdown"
+```
+
+### build_register.py
+
+Classifies manifest rows into tax evidence categories and generates a review-first register.
+
+```bash
+python scripts/build_register.py --manifest logs/source_scan_manifest.csv --operator "Benjamin Ashdown"
+```
+
+Default outputs:
+- `logs/evidence_register.csv`
+- `logs/operations_log.csv`
+
+### duplicate_detector.py
+
+Detects duplicate files using manifest SHA256 hashes.
+
+```bash
+python scripts/duplicate_detector.py --manifest logs/source_scan_manifest.csv --operator "Benjamin Ashdown"
+```
+
+Default outputs:
+- `logs/duplicate_report.csv`
+- `logs/operations_log.csv`
+
 ---
 
 *Last Updated: December 20, 2025*

@@ -40,7 +40,8 @@ pip-delete-this-directory.txt
 htmlcov/
 
 # IDE
-.vscode/
+.vscode/*
+!.vscode/copilot-instructions.md
 .idea/
 *.swp
 *.swo
@@ -54,4 +55,3 @@ responses/
 .env
 *.key
 *_key.txt
-
