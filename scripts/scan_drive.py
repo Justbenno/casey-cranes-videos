@@ -11,7 +11,7 @@ from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
 
-DEFAULT_HASH_CHUNK_SIZE = 1024 * 1024
+DEFAULT_HASH_CHUNK_SIZE_BYTES = 1024 * 1024
 
 
 @dataclass(frozen=True)
@@ -31,7 +31,7 @@ def utc_now() -> str:
     return datetime.now(timezone.utc).isoformat()
 
 
-def sha256_file(path: Path, chunk_size: int = DEFAULT_HASH_CHUNK_SIZE) -> str:
+def sha256_file(path: Path, chunk_size: int = DEFAULT_HASH_CHUNK_SIZE_BYTES) -> str:
     """Return sha256 hash for a file path."""
     digest = hashlib.sha256()
     with path.open("rb") as file_obj:

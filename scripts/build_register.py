@@ -9,8 +9,8 @@ from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
 
-HIGH_CONFIDENCE_THRESHOLD = 2
-MEDIUM_CONFIDENCE_THRESHOLD = 1
+HIGH_CONFIDENCE_THRESHOLD = 2  # Number of keyword matches for high confidence.
+MEDIUM_CONFIDENCE_THRESHOLD = 1  # Number of keyword matches for medium confidence.
 
 
 KEYWORD_MAP: dict[str, tuple[str, ...]] = {
