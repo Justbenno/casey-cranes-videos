@@ -8,9 +8,10 @@ import csv
 from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
+from typing import TypeAlias
 
-ManifestRow = dict[str, str]
-DuplicateGroup = tuple[str, list[ManifestRow]]
+ManifestRow: TypeAlias = dict[str, str]
+DuplicateGroup: TypeAlias = tuple[str, list[ManifestRow]]
 
 
 def utc_now() -> str:

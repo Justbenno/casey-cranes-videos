@@ -6,10 +6,10 @@ from __future__ import annotations
 import argparse
 import csv
 import hashlib
+from collections.abc import Iterable
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Iterable
 
 DEFAULT_HASH_CHUNK_SIZE = 1024 * 1024
 

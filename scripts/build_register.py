@@ -34,6 +34,12 @@ KEYWORD_MAP: dict[str, tuple[str, ...]] = {
     "ATO Correspondence": ("ato", "notice of assessment", "mygov"),
     "Objection Evidence": ("objection", "dispute", "review"),
 }
+# Keyword matching map used for deterministic category assignment.
+# Classification computes a match count for each category from source path and
+# filename text. The highest match count wins. Thresholds are then applied:
+# - high confidence: matches >= HIGH_CONFIDENCE_THRESHOLD
+# - medium confidence: matches == MEDIUM_CONFIDENCE_THRESHOLD
+# - low confidence: no keyword matches (Unknown / Review Required)
 
 
 @dataclass(frozen=True)
@@ -62,12 +68,19 @@ def utc_now() -> str:
 def classify_text(text: str) -> tuple[str, str]:
     """Return category and confidence based on keyword matching."""
     lowered = text.lower()
+    best_category = "Unknown / Review Required"
+    best_matches = 0
+
     for category, keywords in KEYWORD_MAP.items():
         matches = sum(1 for keyword in keywords if keyword in lowered)
-        if matches >= HIGH_CONFIDENCE_THRESHOLD:
-            return category, "high"
-        if matches == MEDIUM_CONFIDENCE_THRESHOLD:
-            return category, "medium"
+        if matches > best_matches:
+            best_matches = matches
+            best_category = category
+
+    if best_matches >= HIGH_CONFIDENCE_THRESHOLD:
+        return best_category, "high"
+    if best_matches == MEDIUM_CONFIDENCE_THRESHOLD:
+        return best_category, "medium"
     return "Unknown / Review Required", "low"
 
 
