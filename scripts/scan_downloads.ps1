@@ -15,6 +15,9 @@ param(
   [string]$OutputPath = ".\logs\downloads_scan_manifest.csv",
 
   [Parameter(Mandatory = $false)]
+  [string]$OperationsLog = ".\logs\operations_log.csv",
+
+  [Parameter(Mandatory = $false)]
   [string]$Operator = "unknown-operator"
 )
 
@@ -47,3 +50,28 @@ $rows | Export-Csv -Path $OutputPath -NoTypeInformation -Encoding UTF8
 Write-Host "Scanned $($rows.Count) file(s)"
 Write-Host "Manifest written to: $OutputPath"
 Write-Host "Operator: $Operator"
+
+# Append operation-log entry for chain-of-custody parity with scan_drive.py
+$logDir = Split-Path -Parent $OperationsLog
+if ($logDir -and -not (Test-Path -LiteralPath $logDir)) {
+  New-Item -ItemType Directory -Path $logDir -Force | Out-Null
+}
+
+$needsHeader = -not (Test-Path -LiteralPath $OperationsLog) -or (Get-Item -LiteralPath $OperationsLog).Length -eq 0
+$timestampUtc = (Get-Date).ToUniversalTime().ToString("o")
+$logRow = [pscustomobject]@{
+  timestamp_utc        = $timestampUtc
+  action               = "scan"
+  source_location      = (Resolve-Path -LiteralPath $SourcePath).Path
+  destination_location = [System.IO.Path]::GetFullPath($OutputPath)
+  file_count           = $rows.Count
+  operator             = $Operator
+  status               = "success"
+  notes                = "Read-only scan completed"
+}
+
+if ($needsHeader) {
+  $logRow | Export-Csv -Path $OperationsLog -NoTypeInformation -Encoding UTF8
+} else {
+  $logRow | Export-Csv -Path $OperationsLog -NoTypeInformation -Encoding UTF8 -Append
+}
