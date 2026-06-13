@@ -6,17 +6,12 @@ from __future__ import annotations
 import argparse
 import csv
 from collections import defaultdict
-from datetime import datetime, timezone
 from pathlib import Path
+
+from operations_log import append_operation_log
 
 ManifestRow = dict[str, str]
 DuplicateGroup = tuple[str, list[ManifestRow]]
-
-
-def utc_now() -> str:
-    """Return current UTC timestamp in ISO 8601 format."""
-    return datetime.now(timezone.utc).isoformat()
-
 
 def read_manifest(path: Path) -> list[ManifestRow]:
     """Read input manifest CSV rows."""
@@ -80,46 +75,6 @@ def write_duplicates(
                 duplicate_count += 1
     return duplicate_count
 
-
-def append_operation_log(
-    log_path: Path,
-    source_location: str,
-    destination_location: str,
-    file_count: int,
-    operator: str,
-) -> None:
-    """Append duplicate detection operation to chain-of-custody log."""
-    log_path.parent.mkdir(parents=True, exist_ok=True)
-    needs_header = not log_path.exists() or log_path.stat().st_size == 0
-    with log_path.open("a", newline="", encoding="utf-8") as file_obj:
-        writer = csv.writer(file_obj)
-        if needs_header:
-            writer.writerow(
-                [
-                    "timestamp_utc",
-                    "action",
-                    "source_location",
-                    "destination_location",
-                    "file_count",
-                    "operator",
-                    "status",
-                    "notes",
-                ]
-            )
-        writer.writerow(
-            [
-                utc_now(),
-                "duplicate_detection",
-                source_location,
-                destination_location,
-                file_count,
-                operator,
-                "success",
-                "Duplicate report generated from manifest",
-            ]
-        )
-
-
 def parse_args() -> argparse.Namespace:
     """Parse command line arguments."""
     parser = argparse.ArgumentParser(description="Detect duplicate files using scan manifest")
@@ -158,10 +113,13 @@ def main() -> int:
     duplicate_record_count = write_duplicates(duplicate_groups, output)
     append_operation_log(
         log_path=log,
+        action="duplicate_detection",
         source_location=str(manifest),
         destination_location=str(output),
         file_count=duplicate_record_count,
         operator=args.operator,
+        status="success",
+        notes="Duplicate report generated from manifest",
     )
 
     print(f"Duplicate groups: {len(duplicate_groups)}")
