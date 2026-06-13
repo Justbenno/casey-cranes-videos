@@ -13,6 +13,7 @@ from operations_log import append_operation_log
 ManifestRow = dict[str, str]
 DuplicateGroup = tuple[str, list[ManifestRow]]
 
+
 def read_manifest(path: Path) -> list[ManifestRow]:
     """Read input manifest CSV rows."""
     with path.open("r", newline="", encoding="utf-8") as file_obj:

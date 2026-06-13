@@ -6,8 +6,9 @@ from __future__ import annotations
 import argparse
 import csv
 from dataclasses import dataclass
-from datetime import datetime, timezone
 from pathlib import Path
+
+from operations_log import append_operation_log
 
 HIGH_CONFIDENCE_THRESHOLD = 2  # Number of keyword matches for high confidence.
 MEDIUM_CONFIDENCE_THRESHOLD = 1  # Number of keyword matches for medium confidence.
@@ -52,11 +53,6 @@ class ClassifiedRow:
     sha256: str
     evidence_status: str
     notes: str
-
-
-def utc_now() -> str:
-    """Return current UTC timestamp in ISO 8601 format."""
-    return datetime.now(timezone.utc).isoformat()
 
 
 def classify_text(text: str) -> tuple[str, str]:
@@ -172,45 +168,6 @@ def write_register(rows: list[ClassifiedRow], output_path: Path) -> None:
             )
 
 
-def append_operation_log(
-    log_path: Path,
-    source_location: str,
-    destination_location: str,
-    file_count: int,
-    operator: str,
-) -> None:
-    """Append register build operation to the chain-of-custody log."""
-    log_path.parent.mkdir(parents=True, exist_ok=True)
-    needs_header = not log_path.exists() or log_path.stat().st_size == 0
-    with log_path.open("a", newline="", encoding="utf-8") as file_obj:
-        writer = csv.writer(file_obj)
-        if needs_header:
-            writer.writerow(
-                [
-                    "timestamp_utc",
-                    "action",
-                    "source_location",
-                    "destination_location",
-                    "file_count",
-                    "operator",
-                    "status",
-                    "notes",
-                ]
-            )
-        writer.writerow(
-            [
-                utc_now(),
-                "classify_register",
-                source_location,
-                destination_location,
-                file_count,
-                operator,
-                "success",
-                "Register generated from manifest",
-            ]
-        )
-
-
 def parse_args() -> argparse.Namespace:
     """Parse command line arguments."""
     parser = argparse.ArgumentParser(description="Build tax evidence register from scan manifest")
@@ -249,10 +206,13 @@ def main() -> int:
     write_register(register_rows, output)
     append_operation_log(
         log_path=log,
+        action="classify_register",
         source_location=str(manifest),
         destination_location=str(output),
         file_count=len(register_rows),
         operator=args.operator,
+        status="success",
+        notes="Register generated from manifest",
     )
 
     print(f"Register rows generated: {len(register_rows)}")
