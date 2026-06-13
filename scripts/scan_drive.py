@@ -52,11 +52,18 @@ def iter_files(root: Path) -> Iterable[Path]:
             yield Path(dirpath) / filename
 
 
-def build_rows(root: Path) -> list[ScanRow]:
+def build_rows(root: Path) -> tuple[list[ScanRow], int]:
     """Build scan records for all files beneath root."""
     rows: list[ScanRow] = []
+    failed_or_skipped = 0
     for file_path in iter_files(root):
-        stat = file_path.stat()
+        try:
+            stat = file_path.stat()
+            file_hash = sha256_file(file_path)
+        except OSError as exc:
+            print(f"Skipped unreadable file: {file_path} ({exc})")
+            failed_or_skipped += 1
+            continue
         rows.append(
             ScanRow(
                 source_path=str(file_path.resolve()),
@@ -66,10 +73,10 @@ def build_rows(root: Path) -> list[ScanRow]:
                 modified_time_utc=datetime.fromtimestamp(
                     stat.st_mtime, tz=timezone.utc
                 ).isoformat(),
-                sha256=sha256_file(file_path),
+                sha256=file_hash,
             )
         )
-    return rows
+    return rows, failed_or_skipped
 
 
 def write_manifest(rows: list[ScanRow], output_path: Path) -> None:
@@ -177,8 +184,14 @@ def main() -> int:
         print(f"Source directory not found: {source}")
         return 1
 
-    rows = build_rows(source)
+    rows, failed_or_skipped = build_rows(source)
     write_manifest(rows, output)
+    status = "success" if failed_or_skipped == 0 else "partial_success"
+    notes = (
+        "Read-only scan completed"
+        if failed_or_skipped == 0
+        else f"Read-only scan completed with {failed_or_skipped} failure(s)/skip(s)"
+    )
     append_operation_log(
         log_path=log,
         action="scan",
@@ -186,11 +199,13 @@ def main() -> int:
         destination_location=str(output),
         file_count=len(rows),
         operator=args.operator,
-        status="success",
-        notes="Read-only scan completed",
+        status=status,
+        notes=notes,
     )
 
     print(f"Scanned {len(rows)} file(s)")
+    if failed_or_skipped:
+        print(f"Skipped {failed_or_skipped} unreadable file(s)")
     print(f"Manifest written to: {output}")
     return 0
 
