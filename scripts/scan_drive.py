@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import csv
 import hashlib
+import os
 from collections.abc import Iterable
 from dataclasses import dataclass
 from datetime import datetime, timezone
@@ -44,10 +45,11 @@ def sha256_file(path: Path, chunk_size: int = DEFAULT_HASH_CHUNK_SIZE_BYTES) -> 
 
 
 def iter_files(root: Path) -> Iterable[Path]:
-    """Yield files under root recursively in sorted order."""
-    for item in sorted(root.rglob("*")):
-        if item.is_file():
-            yield item
+    """Yield files under root recursively in sorted order, without following symlinks."""
+    for dirpath, dirnames, filenames in os.walk(root, followlinks=False):
+        dirnames.sort()
+        for filename in sorted(filenames):
+            yield Path(dirpath) / filename
 
 
 def build_rows(root: Path) -> list[ScanRow]:
