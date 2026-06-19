@@ -29,6 +29,14 @@ class ScanRow:
     sha256: str
 
 
+@dataclass(frozen=True)
+class ScanError:
+    """Represents one file that could not be scanned."""
+
+    source_path: str
+    error: str
+
+
 def sha256_file(path: Path, chunk_size: int = DEFAULT_HASH_CHUNK_SIZE_BYTES) -> str:
     """Return sha256 hash for a file path."""
     digest = hashlib.sha256()
@@ -49,21 +57,22 @@ def iter_files(root: Path) -> Iterable[Path]:
             yield Path(dirpath) / filename
 
 
-def build_rows(root: Path) -> tuple[list[ScanRow], int]:
+def build_rows(root: Path) -> tuple[list[ScanRow], list[ScanError]]:
     """Build scan records for all files beneath root."""
     rows: list[ScanRow] = []
-    failed_or_skipped = 0
+    errors: list[ScanError] = []
     for file_path in iter_files(root):
         try:
             stat = file_path.stat()
             file_hash = sha256_file(file_path)
-        except OSError as exc:
+            resolved_path = file_path.resolve()
+        except (OSError, RuntimeError) as exc:
             print(f"Skipped unreadable file: {file_path} ({exc})")
-            failed_or_skipped += 1
+            errors.append(ScanError(source_path=str(file_path), error=str(exc)))
             continue
         rows.append(
             ScanRow(
-                source_path=str(file_path.resolve()),
+                source_path=str(resolved_path),
                 file_name=file_path.name,
                 file_extension=file_path.suffix.lower(),
                 file_size_bytes=stat.st_size,
@@ -73,7 +82,7 @@ def build_rows(root: Path) -> tuple[list[ScanRow], int]:
                 sha256=file_hash,
             )
         )
-    return rows, failed_or_skipped
+    return rows, errors
 
 
 def write_manifest(rows: list[ScanRow], output_path: Path) -> None:
@@ -102,6 +111,21 @@ def write_manifest(rows: list[ScanRow], output_path: Path) -> None:
                     row.sha256,
                 ]
             )
+
+
+def derive_error_report_path(output_path: Path) -> Path:
+    """Return the companion CSV path for scan errors."""
+    return output_path.with_name(f"{output_path.stem}_errors.csv")
+
+
+def write_error_report(errors: list[ScanError], output_path: Path) -> None:
+    """Write skipped-file scan errors to CSV."""
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    with output_path.open("w", newline="", encoding="utf-8") as file_obj:
+        writer = csv.writer(file_obj)
+        writer.writerow(["source_path", "error"])
+        for error in errors:
+            writer.writerow([error.source_path, error.error])
 
 
 def parse_args() -> argparse.Namespace:
@@ -139,13 +163,19 @@ def main() -> int:
         print(f"Source directory not found: {source}")
         return 1
 
-    rows, failed_or_skipped = build_rows(source)
+    rows, errors = build_rows(source)
     write_manifest(rows, output)
-    status = "success" if failed_or_skipped == 0 else "partial_success"
+    error_report = derive_error_report_path(output)
+    if errors:
+        write_error_report(errors, error_report)
+    status = "success" if not errors else "partial_success"
     notes = (
         "Read-only scan completed"
-        if failed_or_skipped == 0
-        else f"Read-only scan completed with {failed_or_skipped} failure(s)/skip(s)"
+        if not errors
+        else (
+            "Read-only scan completed with "
+            f"{len(errors)} failure(s)/skip(s); error report: {error_report}"
+        )
     )
     append_operation_log(
         log_path=log,
@@ -159,8 +189,9 @@ def main() -> int:
     )
 
     print(f"Scanned {len(rows)} file(s)")
-    if failed_or_skipped:
-        print(f"Skipped {failed_or_skipped} unreadable file(s)")
+    if errors:
+        print(f"Skipped {len(errors)} unreadable file(s)")
+        print(f"Error report written to: {error_report}")
     print(f"Manifest written to: {output}")
     return 0
 

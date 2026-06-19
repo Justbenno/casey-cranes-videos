@@ -80,6 +80,7 @@ python scripts/scan_drive.py --source "/absolute/path/to/source" --operator "Ben
 
 Default outputs:
 - `logs/source_scan_manifest.csv`
+- `logs/source_scan_manifest_errors.csv` (only when files cannot be scanned)
 - `logs/operations_log.csv` (generated locally; see `templates/operations_log_template.csv`)
 
 ### scan_downloads.ps1
@@ -114,6 +115,10 @@ Default outputs:
 - `logs/duplicate_report.csv`
 - `logs/operations_log.csv` (generated locally; see `templates/operations_log_template.csv`)
 
+### Runtime log template
+
+Use `templates/operations_log_template.csv` as the version-controlled header template for the local `logs/operations_log.csv` audit file.
+
 ---
 
-*Last Updated: December 20, 2025*
+*Last Updated: June 19, 2026*
