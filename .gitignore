@@ -51,6 +51,9 @@ htmlcov/
 scripts/responses/
 responses/
 
+# Runtime tax-ops logs
+logs/operations_log.csv
+
 # API keys and secrets
 .env
 *.key

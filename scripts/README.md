@@ -80,7 +80,7 @@ python scripts/scan_drive.py --source "/absolute/path/to/source" --operator "Ben
 
 Default outputs:
 - `logs/source_scan_manifest.csv`
-- `logs/operations_log.csv`
+- `logs/operations_log.csv` (generated locally; see `templates/operations_log_template.csv`)
 
 ### scan_downloads.ps1
 
@@ -100,7 +100,7 @@ python scripts/build_register.py --manifest logs/source_scan_manifest.csv --oper
 
 Default outputs:
 - `logs/evidence_register.csv`
-- `logs/operations_log.csv`
+- `logs/operations_log.csv` (generated locally; see `templates/operations_log_template.csv`)
 
 ### duplicate_detector.py
 
@@ -112,7 +112,7 @@ python scripts/duplicate_detector.py --manifest logs/source_scan_manifest.csv --
 
 Default outputs:
 - `logs/duplicate_report.csv`
-- `logs/operations_log.csv`
+- `logs/operations_log.csv` (generated locally; see `templates/operations_log_template.csv`)
 
 ---
 
