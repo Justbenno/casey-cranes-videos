@@ -18,10 +18,12 @@ This repository helps organize, track, and manage all video content for Casey Cr
 casey-cranes-videos/
 ├── README.md                 # This file
 ├── VIDEO_CATALOG.md          # Master catalog of all videos
+├── prompts/                  # Version-controlled operational prompts
 ├── metadata/                 # Video metadata files (JSON format)
 ├── schemas/                  # JSON schemas for data validation
 ├── scripts/                  # Automation scripts for catalog management
 ├── templates/                # Templates for video documentation
+├── logs/                     # Operational logs and generated registers
 ├── docs/                     # Marketing guides and strategies
 ├── archive/                  # Historical/old versions of documents
 ├── content/                  # Marketing content
@@ -96,6 +98,27 @@ python scripts/catalog_manager.py check
 ### Weekly Reviews
 Review and update video performance metrics weekly using the automation scripts.
 
+## Tax Operations Agent Scaffolding
+
+This repository includes an initial deterministic tax-operations scaffold focused on:
+
+SCAN → CLASSIFY → REGISTER
+
+Core governance prompt:
+
+- `prompts/TAX-MSTR-SYSTEM-001.md`
+
+Workspace instruction entry point:
+
+- `.vscode/copilot-instructions.md`
+
+Initial scripts:
+
+- `scripts/scan_drive.py`
+- `scripts/scan_downloads.ps1`
+- `scripts/build_register.py`
+- `scripts/duplicate_detector.py`
+
 ## Maintained By
 
 Benjamin Ashdown  
@@ -103,5 +126,4 @@ Casey Crane Hire
 
 ---
 
-*Last Updated: October 26, 2025*
-
+*Last Updated: May 23, 2026*
