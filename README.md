@@ -1,5 +1,42 @@
 # Casey Cranes Video Catalog
 
+## CaseyOps Stage 1 MVP
+
+This repository includes `casey-crane-operations-mvp`, a localhost-only workflow prototype under `apps/`. It uses fictional demonstration data and is intentionally not a production system.
+
+### Purpose and limitations
+
+CaseyOps demonstrates controlled job enquiries, draft estimating, lift-plan data capture, sequential workflow, shared evidence records, placeholder roles, revisions, and audit concepts. AI dispatch, final quotations, engineering approval, compliance approval, integrations, cloud deployment, and all Stage 2 modules are excluded.
+
+### Technology and structure
+
+- `apps/web` — React, TypeScript, Vite responsive industrial interface.
+- `apps/api` — Express API, Zod validation, Prisma client integration.
+- `apps/api/prisma/schema.prisma` — PostgreSQL relational model with UUIDs, soft deletion, revisions, approvals, and immutable evidence.
+
+### Installation and development
+
+```bash
+npm install
+cp apps/api/.env.example apps/api/.env
+npm run dev
+```
+
+The web app runs at `http://localhost:5173`; the API health check is `http://localhost:4000/api/health`. A local PostgreSQL database is required for Prisma migrations. The API currently uses a placeholder demo user and no real authentication.
+
+```bash
+npm run build
+npm test
+```
+
+### Development workflow
+
+Use feature branches and pull requests. Keep operational decisions human-approved, add revisions rather than overwriting records, and never commit production credentials or customer data. Tag completed milestones and update `CHANGELOG.md`.
+
+### Roadmap
+
+Stage 1 is complete as a workflow-validation scaffold. Future work requires approval and may add production authentication, migrations, persistent API handlers, and additional modules; no Stage 2 development has begun.
+
 This repository serves as a comprehensive catalog and documentation system for Casey Crane Hire's video marketing content.
 
 ## Purpose
@@ -104,4 +141,3 @@ Casey Crane Hire
 ---
 
 *Last Updated: October 26, 2025*
-
