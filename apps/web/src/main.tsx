@@ -1,4 +1,5 @@
 import { StrictMode } from "react";
+import { useState } from "react";
 import { createRoot } from "react-dom/client";
 import "./styles.css";
 
@@ -44,5 +45,4 @@ function Workspace({ active, selected, onSelect }: { active: string; selected: J
 }
 function Detail({ label, value }: { label: string; value: string }) { return <div className="detail-card"><span className="eyebrow">{label}</span><strong>{value}</strong></div>; }
 const icons: Record<string, string> = { Dashboard: "▦", Jobs: "▤", Estimating: "$", "Lift Planning": "⌁", Workflow: "⇄", Evidence: "▧", Administration: "⚙" };
-import { useState } from "react";
 createRoot(document.getElementById("root")!).render(<StrictMode><App /></StrictMode>);
