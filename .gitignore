@@ -55,3 +55,8 @@ responses/
 *.key
 *_key.txt
 
+
+# CaseyOps generated files
+node_modules/
+apps/*/dist/
+*.tsbuildinfo
